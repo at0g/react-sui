@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import ImagePreloader from '../containers/ImagePreloader'
-import FallbackImg from './images/FallbackImg'
+import ImagePreloader from '../../containers/ImagePreloader'
+import FallbackImg from '../images/FallbackImg'
 
 const paddingBottom = ({ width, height }) => `${height / width * 100}%`
 
