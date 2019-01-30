@@ -10,7 +10,7 @@ UNDER DEVELOPMENT
 # Components
 
 Atoms
-- [ ] Button
+- [X] Button
 - [ ] Icon
 - [ ] IconButton
 - [ ] Input
@@ -32,7 +32,7 @@ Molecules
 - [X] Card
 - [ ] Checkbox
 - [ ] FormItem
-- [ ] Image
+- [X] Image
 - [ ] List
 - [ ] Menu
 - [ ] NumberInput
