@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run storybook",
+    "start": "npm run build-svg && npm run storybook",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
+    "build-svg": "svgr -d src/components/images src/assets/images --replace-attr-values \"#000=currentColor\"",
     "build-storybook": "build-storybook"
   },
-  "author": "",
+  "author": "Ben Daley<hello@fanboy.io>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -21,6 +22,7 @@
     "@storybook/addon-links": "^4.1.11",
     "@storybook/addons": "^4.1.11",
     "@storybook/react": "^4.1.11",
+    "@svgr/cli": "^4.1.0",
     "babel-plugin-styled-components": "^1.10.0",
     "jsx-to-string": "^1.4.0"
   },
