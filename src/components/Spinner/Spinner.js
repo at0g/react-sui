@@ -31,12 +31,13 @@ class Spinner extends React.Component {
     }
 
     render() {
-        const { size } = this.props;
+        const { size, ...props } = this.props;
         return (
             <canvas
                 ref={el => this.canvas = el}
                 width={size}
                 height={size}
+                {...props}
             />
         )
     }

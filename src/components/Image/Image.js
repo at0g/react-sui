@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ImagePreloader from '../../containers/ImagePreloader'
 import FallbackImg from '../images/FallbackImg'
+import Spinner from '../Spinner'
 
 const paddingBottom = ({ width, height }) => `${height / width * 100}%`
 
@@ -39,8 +40,6 @@ const StyledImg = styled('div')`
     background-size: cover;
 `
 
-const Spinner = () => <span>Loading</span>
-
 function Image({ src, width, height, scale, ...props }) {
     return (
         <ImagePreloader src={src}>
@@ -48,7 +47,12 @@ function Image({ src, width, height, scale, ...props }) {
                 const displayWidth = Math.floor(width / scale)
                 const displayHeight = Math.floor(height / scale)
 
-                let Component = Spinner
+                let Component = (props) => (
+                    <Spinner
+                        {...props}
+                        size={Math.min(displayWidth, displayHeight)}
+                    />
+                )
                 if (loaded && error) {
                     Component = FallbackImg
                 }

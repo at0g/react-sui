@@ -24,7 +24,7 @@ Atoms
 - [X] Paper
 - [ ] ProgressBar
 - [ ] Section
-- [ ] Spinner
+- [X] Spinner
 - [ ] Text
 
 Molecules
