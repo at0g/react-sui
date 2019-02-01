@@ -29,28 +29,39 @@ describe('ImagePreloader', () => {
   })
 
   describe('img', () => {
+    let props
+    beforeEach(() => {
+      props = img.props()
+    })
+
     it('should render a visually hidden image', () => {
       expect(img).toHaveLength(1)
     })
 
     it('should pass props.src to the image', () => {
-      expect(img.props().src).toBe(src)
+      expect(props.src).toBe(src)
     })
 
     it('should add onLoad and onError handlers', () => {
-      const { onLoad, onError } = img.props()
+      const { onLoad, onError } = props
       expect(typeof onLoad).toBe('function')
       expect(typeof onError).toBe('function')
     })
-  })
 
-  it('should call children when the image loads', () => {
-    img.props().onLoad()
-    expect(children).toHaveBeenLastCalledWith({ loaded: true, error: false })
-  })
+    describe('state changes', () => {
+      const assertState = (expected) => {
+        expect(children).toHaveBeenLastCalledWith(expected)
+      }
 
-  it('should call children when the image fails to load', () => {
-    img.props().onError()
-    expect(children).toHaveBeenLastCalledWith({ loaded: true, error: true })
+      it('should call children when the image loads', () => {
+        props.onLoad()
+        assertState({ loaded: true, error: false })
+      })
+
+      it('should call children when the image fails to load', () => {
+        props.onError()
+        assertState({ loaded: true, error: true })
+      })
+    })
   })
 })
