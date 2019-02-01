@@ -2,8 +2,8 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 const disabledStyles = p => p.disabled
-    ? css`opacity: 0.3; cursor: not-allowed;`
-    : css`opacity: 1; cursor: pointer;`
+  ? css`opacity: 0.3; cursor: not-allowed;`
+  : css`opacity: 1; cursor: pointer;`
 
 const padding = p => p.theme.spacing[p.size] || 0
 
@@ -28,19 +28,19 @@ const Button = styled.button`
 `
 
 const renameProps = (map) => Component => props => React.createElement(
-    Component,
-    Object.keys(props).reduce((accum, key) => ({
-        ...accum,
-        [map[key] || key]: props[key],
-    }), {})
+  Component,
+  Object.keys(props).reduce((accum, key) => ({
+    ...accum,
+    [map[key] || key]: props[key]
+  }), {})
 )
 
 export default Object.assign(
-    renameProps({ label: 'children' })(Button),
-    {
-        displayName: 'Button',
-        defaultProps: {
-            size: 'md',
-        }
-    },
+  renameProps({ label: 'children' })(Button),
+  {
+    displayName: 'Button',
+    defaultProps: {
+      size: 'md'
+    }
+  }
 )

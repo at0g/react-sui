@@ -40,38 +40,37 @@ const StyledImg = styled('div')`
     background-size: cover;
 `
 
-function Image({ src, width, height, scale, ...props }) {
-    return (
-        <ImagePreloader src={src}>
-            {({ loaded, error }) => {
-                const displayWidth = Math.floor(width / scale)
-                const displayHeight = Math.floor(height / scale)
+function Image ({ src, width, height, scale, ...props }) {
+  return (
+    <ImagePreloader src={src}>
+      {({ loaded, error }) => {
+        const displayWidth = Math.floor(width / scale)
+        const displayHeight = Math.floor(height / scale)
 
-                let Component = (props) => (
-                    <Spinner
-                        {...props}
-                        size={Math.min(displayWidth, displayHeight)}
-                    />
-                )
-                if (loaded && error) {
-                    Component = FallbackImg
-                }
-                else if (loaded && !error) {
-                    Component = StyledImg
-                }
+        let Component = (props) => (
+          <Spinner
+            {...props}
+            size={Math.min(displayWidth, displayHeight)}
+          />
+        )
+        if (loaded && error) {
+          Component = FallbackImg
+        } else if (loaded && !error) {
+          Component = StyledImg
+        }
 
-                return (
-                    <Container aria-hidden="true" width={displayWidth} height={displayHeight}>
-                        <Display as={Component} src={src} />
-                    </Container>
-                )
-            }}
-        </ImagePreloader>
-    )
+        return (
+          <Container aria-hidden='true' width={displayWidth} height={displayHeight}>
+            <Display as={Component} src={src} />
+          </Container>
+        )
+      }}
+    </ImagePreloader>
+  )
 }
 
 Image.defaultProps = {
-    scale: window.devicePixelRatio || 1
+  scale: window.devicePixelRatio || 1
 }
 
 export default Image

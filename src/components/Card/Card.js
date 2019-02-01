@@ -15,20 +15,20 @@ const Header = styled(Children)`
     position: relative;
 `
 
-function Card({ children, label, ...props }) {
-    const showHeader = !!label
-    return (
-        <Paper as="section" {...props}>
-            {showHeader && (
-                <Header>
-                    {label}
-                </Header>
-            )}
-            <Children>
-                {children}
-            </Children>
-        </Paper>
-    )
+function Card ({ children, label, ...props }) {
+  const showHeader = !!label
+  return (
+    <Paper as='section' {...props}>
+      {showHeader && (
+        <Header>
+          {label}
+        </Header>
+      )}
+      <Children>
+        {children}
+      </Children>
+    </Paper>
+  )
 }
 
 export default Card

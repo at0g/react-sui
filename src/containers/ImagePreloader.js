@@ -2,37 +2,33 @@ import React from 'react'
 
 class ImagePreloader extends React.Component {
     state = {
-        loaded: false,
-        error: false,
-    }
-
-    constructor(props) {
-        super(props);
+      loaded: false,
+      error: false
     }
 
     handleError = () => {
-        this.setState({ loaded: true, error: true })
+      this.setState({ loaded: true, error: true })
     }
 
     handleLoad = () => {
-        this.setState({ loaded: true, error: null })
+      this.setState({ loaded: true, error: null })
     }
 
-    render() {
-        const { children, ...props } = this.props
+    render () {
+      const { children, ...props } = this.props
 
-        return (
-            <React.Fragment>
-                <img
-                    {...props}
-                    onLoad={this.handleLoad}
-                    onError={this.handleError}
-                    style={{ visibility: 'hidden', position: 'absolute', left: -9999 }}
-                />
+      return (
+        <React.Fragment>
+          <img
+            {...props}
+            onLoad={this.handleLoad}
+            onError={this.handleError}
+            style={{ visibility: 'hidden', position: 'absolute', left: -9999 }}
+          />
 
-                {children(this.state)}
-            </React.Fragment>
-        )
+          {children(this.state)}
+        </React.Fragment>
+      )
     }
 }
 

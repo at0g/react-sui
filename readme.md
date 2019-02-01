@@ -2,6 +2,8 @@
 
 A UI toolkit for `react` and `styled-components`.
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 
 ```
 UNDER DEVELOPMENT
@@ -53,6 +55,7 @@ Organisms
 - [ ] NavBar
 - [ ] PopOver
 - [ ] Select
+- [ ] ToolTip
 - [ ] RichText
 - [ ] ViewStack
 
