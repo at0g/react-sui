@@ -4,7 +4,7 @@ class Spinner extends React.Component {
   static degreesToRadians (degrees) {
     return degrees * Math.PI / 180
   }
-  
+
   componentDidMount () {
     this.animate()
   }
