@@ -3,6 +3,7 @@
 A UI toolkit for `react` and `styled-components`.
 
 [![CircleCI](https://circleci.com/gh/at0g/react-sui/tree/master.svg?style=svg)](https://circleci.com/gh/at0g/react-sui/tree/master)
+![CodeCov](https://img.shields.io/codecov/c/gh/at0g/react-sui.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
