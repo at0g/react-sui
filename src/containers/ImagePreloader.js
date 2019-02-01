@@ -1,4 +1,11 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const VisuallyHidden = styled('div')`
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+`
 
 class ImagePreloader extends React.Component {
     state = {
@@ -11,7 +18,7 @@ class ImagePreloader extends React.Component {
     }
 
     handleLoad = () => {
-      this.setState({ loaded: true, error: null })
+      this.setState({ loaded: true, error: false })
     }
 
     render () {
@@ -19,11 +26,11 @@ class ImagePreloader extends React.Component {
 
       return (
         <React.Fragment>
-          <img
+          <VisuallyHidden
+            as='img'
             {...props}
             onLoad={this.handleLoad}
             onError={this.handleError}
-            style={{ visibility: 'hidden', position: 'absolute', left: -9999 }}
           />
 
           {children(this.state)}

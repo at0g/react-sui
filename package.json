@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run storybook",
-    "test": "npm run lint",
+    "test": "npm run lint && jest --coverage",
     "storybook": "start-storybook -p 6006",
     "build-svg": "svgr -d src/components/images src/assets/images --replace-attr-values \"#000=currentColor\"",
     "build-storybook": "build-storybook",
@@ -19,6 +19,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^4.1.11",
     "@storybook/addon-knobs": "^4.1.11",
     "@storybook/addon-links": "^4.1.11",
@@ -28,7 +29,10 @@
     "@svgr/cli": "^4.1.0",
     "babel-eslint": "^10.0.1",
     "babel-plugin-styled-components": "^1.10.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
     "husky": "^1.3.1",
+    "jest": "^24.0.0",
     "jsx-to-string": "^1.4.0",
     "lint-staged": "^8.1.1",
     "snazzy": "^8.0.0",
@@ -41,8 +45,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged",
-      "pre-push": "npm test"
+      "pre-commit": "npx lint-staged"
     }
   },
   "lint-staged": {
@@ -53,5 +56,16 @@
   },
   "standard": {
     "parser": "babel-eslint"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/images/**",
+      "!**/*.stories.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>jest.setup.js"
+    ]
   }
 }
