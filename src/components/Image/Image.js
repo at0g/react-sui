@@ -1,44 +1,49 @@
 import React from 'react'
-import styled from 'styled-components'
+import { FelaComponent } from 'react-fela'
 import ImagePreloader from '../../containers/ImagePreloader'
 import FallbackImg from '../images/FallbackImg'
 import Spinner from '../Spinner'
 
-const paddingBottom = ({ width, height }) => `${height / width * 100}%`
-
-const ImageContainer = styled('div')`
-    display: inline-block;
-    width: ${p => p.width / 16}rem;
-    max-width: 100%;
-    position: relative;
-    user-select: none;
-    &:before {
-        content: "";
-        box-sizing: content-box;
-        display: block;
-        height: 0;
-        padding: 0 0 ${paddingBottom};
-        position: relative;
-        max-width: 100%;        
+const imageContainer = [
+  {
+    display: 'inline-block',
+    maxWidth: '100%',
+    position: 'relative',
+    userSelect: 'none',
+    ':before': {
+      content: '""',
+      boxSizing: 'content-box',
+      display: 'block',
+      height: 0,
+      position: 'relative',
+      maxWidth: '100%'
     }
-`
-
-const Display = styled('div')`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    svg& {
-        fill: currentColor;
-        pointer-events: none;
+  },
+  ({ width, height }) => ({
+    width: `${width / 16}rem`,
+    '&:before': {
+      paddingBottom: `${height / width * 100}%`
     }
-`
+  })
+]
 
-const StyledImg = styled(({ src, ...props }) => <div {...props} />)`
-    background: transparent url("${p => p.src}") 50% 50% no-repeat;
-    background-size: cover;
-`
+const imageArea = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  left: 0
+}
+
+const styledImg = [
+  imageArea,
+  {
+    backgroundSize: 'cover',
+    backgroundPosition: '50% 50%',
+    backgroundRepeat: 'no-repeat'
+  },
+  ({ src }) => ({ backgroundImage: `url("${src}")` })
+]
 
 function Image ({ src, width, height, scale, ...props }) {
   return (
@@ -47,25 +52,29 @@ function Image ({ src, width, height, scale, ...props }) {
         const displayWidth = Math.floor(width / scale)
         const displayHeight = Math.floor(height / scale)
 
-        let Component
-
-        if (!loaded) {
-          Component = (props) => (
-            <Spinner
-              {...props}
-              size={Math.min(displayWidth, displayHeight)}
-            />
-          )
-        } else if (error) {
-          Component = FallbackImg
-        } else if (loaded && !error) {
-          Component = props => <StyledImg {...props} src={src} />
-        }
-
         return (
-          <ImageContainer aria-hidden='true' width={displayWidth} height={displayHeight}>
-            <Display as={Component} />
-          </ImageContainer>
+          <FelaComponent
+            style={imageContainer}
+            aria-hidden='true'
+            width={displayWidth}
+            height={displayHeight}
+            data-sui='Image__Container'
+          >
+            <FelaComponent style={imageArea} data-sui='Image__imageArea'>
+              {(props) => {
+                if (!loaded) {
+                  const size = Math.min(displayWidth, displayHeight)
+                  return <Spinner {...props} size={size} />
+                } else if (error) {
+                  return <FallbackImg {...props} />
+                } else if (loaded && !error) {
+                  return (
+                    <FelaComponent style={styledImg} {...props} src={src} data-sui='Image' />
+                  )
+                }
+              }}
+            </FelaComponent>
+          </FelaComponent>
         )
       }}
     </ImagePreloader>

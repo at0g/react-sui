@@ -32,7 +32,7 @@ describe('Spinner', () => {
     let realCAF
 
     beforeAll(() => {
-      requestAnimationFrame = jest.fn(() => 'test-animation-id')
+      requestAnimationFrame = jest.fn(() => 'mock-animation-id')
       realRAF = window.requestAnimationFrame
       window.requestAnimationFrame = requestAnimationFrame
 
@@ -49,16 +49,18 @@ describe('Spinner', () => {
     it('should call animate when mounted', () => {
       const node = <Spinner size={12} />
       const spy = jest.spyOn(Spinner.prototype, 'animate')
-      mount(node)
+      const expected = mount(node).instance().animate
 
       expect(spy).toBeCalled()
-      expect(requestAnimationFrame).toBeCalledWith(spy)
+      expect(requestAnimationFrame).toBeCalledWith(expected)
     })
 
     it('should stop animating when unmounted', () => {
+      const expected = Symbol('mockRAFID')
       const wrapper = mount(<Spinner size={12} />)
+      requestAnimationFrame.mockImplementationOnce(() => expected)
       wrapper.unmount()
-      expect(cancelAnimationFrame).toBeCalledWith('test-animation-id')
+      expect(cancelAnimationFrame).toBeCalledWith(expected)
     })
   })
 

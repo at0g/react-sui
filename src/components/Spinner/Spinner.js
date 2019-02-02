@@ -5,6 +5,13 @@ class Spinner extends React.Component {
     return degrees * Math.PI / 180
   }
 
+  constructor (props) {
+    super(props)
+
+    // Explicitly bind in the constructor to enable a componentDidMount test spy
+    this.animate = this.animate.bind(this)
+  }
+
   componentDidMount () {
     this.animate()
   }

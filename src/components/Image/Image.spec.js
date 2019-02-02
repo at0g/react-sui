@@ -1,31 +1,22 @@
 /* eslint-env jest */
 import React from 'react'
 import { shallow } from 'enzyme'
-import MockFallbackImg from '../images/FallbackImg'
 import Image from './Image'
 
-jest.mock('../images/FallbackImg', () =>
-  jest.fn(() => <div>mock fallback image</div>)
-)
+const defaultProps = { src: Symbol('path/to/image'), width: 10, height: 10 }
+function getImagePreloader (props = {}) {
+  return shallow(
+    <Image {...defaultProps} {...props} />
+  )
+    .find('ImagePreloader')
+}
+function getDisplay (props, loaderProps) {
+  return getImagePreloader(props)
+    .renderProp('children')(loaderProps)
+    .find('[data-sui="Image__imageArea"]').renderProp('children')()
+}
 
 describe('Image', () => {
-  const defaultProps = { src: Symbol('path/to/image'), width: 10, height: 10 }
-  function getImagePreloader (props = {}) {
-    return shallow(
-      <Image {...defaultProps} {...props} />
-    )
-      .find('ImagePreloader')
-  }
-  function getDisplay (props, loaderProps) {
-    return getImagePreloader(props)
-      .renderProp('children')(loaderProps)
-      .find('Display').renderProp('as')()
-  }
-
-  beforeEach(() => {
-    MockFallbackImg.mockClear()
-  })
-
   it('should pass props.src to ImagePreloader', () => {
     const wrapper = getImagePreloader()
     expect(wrapper.props().src).toBe(defaultProps.src)
@@ -68,7 +59,7 @@ describe('Image', () => {
         {},
         { loaded: true, error: true }
       )
-      expect(wrapper.text()).toEqual('mock fallback image')
+      expect(wrapper.is('SvgFallbackImg')).toBe(true)
     })
   })
 
@@ -78,7 +69,7 @@ describe('Image', () => {
         {},
         { loaded: true, error: false }
       )
-      expect(wrapper.is('StyledImg')).toBe(true)
+      expect(wrapper.is('[data-sui=\'Image\']')).toBe(true)
       expect(wrapper.props().src).toBe(defaultProps.src)
     })
   })
