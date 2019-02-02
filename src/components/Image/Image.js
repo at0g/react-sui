@@ -6,7 +6,7 @@ import Spinner from '../Spinner'
 
 const paddingBottom = ({ width, height }) => `${height / width * 100}%`
 
-const Container = styled('div')`
+const ImageContainer = styled('div')`
     display: inline-block;
     width: ${p => p.width / 16}rem;
     max-width: 100%;
@@ -35,7 +35,7 @@ const Display = styled('div')`
     }
 `
 
-const StyledImg = styled('div')`
+const StyledImg = styled(({ src, ...props }) => <div {...props} />)`
     background: transparent url("${p => p.src}") 50% 50% no-repeat;
     background-size: cover;
 `
@@ -47,22 +47,25 @@ function Image ({ src, width, height, scale, ...props }) {
         const displayWidth = Math.floor(width / scale)
         const displayHeight = Math.floor(height / scale)
 
-        let Component = (props) => (
-          <Spinner
-            {...props}
-            size={Math.min(displayWidth, displayHeight)}
-          />
-        )
-        if (loaded && error) {
+        let Component
+
+        if (!loaded) {
+          Component = (props) => (
+            <Spinner
+              {...props}
+              size={Math.min(displayWidth, displayHeight)}
+            />
+          )
+        } else if (error) {
           Component = FallbackImg
         } else if (loaded && !error) {
-          Component = StyledImg
+          Component = props => <StyledImg {...props} src={src} />
         }
 
         return (
-          <Container aria-hidden='true' width={displayWidth} height={displayHeight}>
-            <Display as={Component} src={src} />
-          </Container>
+          <ImageContainer aria-hidden='true' width={displayWidth} height={displayHeight}>
+            <Display as={Component} />
+          </ImageContainer>
         )
       }}
     </ImagePreloader>
